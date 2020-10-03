@@ -1,0 +1,24 @@
+.active-pink-4 input[type=text]:focus:not([readonly]) {
+  border: 1px solid #f48fb1;
+  box-shadow: 0 0 0 1px #f48fb1;
+  }
+
+.container-fluid{
+  margin: 1%;
+}
+.input {
+  margin: .1%;
+}
+
+.btn-space {
+  margin-right: .1%;
+}
+
+.alert {
+  display:inline-block;
+}
+
+.pagination {
+  margin-right: 10%;
+  float: right;
+}
