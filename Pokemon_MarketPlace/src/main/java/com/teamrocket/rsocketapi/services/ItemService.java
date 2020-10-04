@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import com.teamrocket.rsocketapi.dto.ItemDTO;
 import com.teamrocket.rsocketapi.mappers.ItemMapper;
 import com.teamrocket.rsocketapi.model.Item;
-import com.teamrocket.rsocketapi.repository.ItemDatabase;
+import com.teamrocket.rsocketapi.repository.ItemRepo;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -14,7 +14,7 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class ItemService {
 
-  private final ItemDatabase repo;
+  private final ItemRepo repo;
   private final ItemMapper mapper;
 
   public Flux<ItemDTO> getAll() {

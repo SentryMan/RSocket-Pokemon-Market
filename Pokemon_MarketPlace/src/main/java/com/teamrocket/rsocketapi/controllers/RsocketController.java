@@ -17,7 +17,6 @@ import com.teamrocket.rsocketapi.services.ShinyService;
 import io.rsocket.RSocket;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 @Controller
 @RequiredArgsConstructor
@@ -62,8 +61,8 @@ public class RsocketController {
   }
 
   @MessageMapping("api.email")
-  public Mono<String> sendEmail(MailModel email) throws MessagingException {
+  public void sendEmail(MailModel email) throws MessagingException {
 
-    return mailService.sendEmail(email);
+    mailService.sendEmail(email);
   }
 }

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import com.teamrocket.rsocketapi.dto.ShinyDTO;
 import com.teamrocket.rsocketapi.mappers.ShinyMapper;
 import com.teamrocket.rsocketapi.model.ShinyPokemon;
-import com.teamrocket.rsocketapi.repository.ShinyPokeDatabase;
+import com.teamrocket.rsocketapi.repository.ShinyRepo;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -15,7 +15,7 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class ShinyService {
 
-  @Autowired private final ShinyPokeDatabase repo;
+  @Autowired private final ShinyRepo repo;
   private final ShinyMapper mapper;
 
   public Flux<ShinyDTO> getAll() {

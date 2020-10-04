@@ -9,7 +9,6 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import com.teamrocket.rsocketapi.model.MailModel;
 import com.teamrocket.rsocketapi.model.Sprite;
-import reactor.core.publisher.Mono;
 
 @Service
 public class MailService {
@@ -18,7 +17,7 @@ public class MailService {
 
   NumberFormat price = NumberFormat.getCurrencyInstance();
 
-  public Mono<String> sendEmail(MailModel email) throws MessagingException {
+  public void sendEmail(MailModel email) throws MessagingException {
 
     final MimeMessage message = sender.createMimeMessage();
 
@@ -72,7 +71,5 @@ public class MailService {
         true);
 
     sender.send(message);
-
-    return Mono.just("Email Sent");
   }
 }

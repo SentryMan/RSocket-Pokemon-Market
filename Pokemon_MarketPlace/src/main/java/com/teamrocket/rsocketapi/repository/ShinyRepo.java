@@ -3,7 +3,7 @@ package com.teamrocket.rsocketapi.repository;
 import java.math.BigInteger;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import org.springframework.stereotype.Repository;
-import com.teamrocket.rsocketapi.model.Pokemon;
+import com.teamrocket.rsocketapi.model.ShinyPokemon;
 
 @Repository
-public interface PokeDatabase extends ReactiveMongoRepository<Pokemon, BigInteger> {}
+public interface ShinyRepo extends ReactiveMongoRepository<ShinyPokemon, BigInteger> {}

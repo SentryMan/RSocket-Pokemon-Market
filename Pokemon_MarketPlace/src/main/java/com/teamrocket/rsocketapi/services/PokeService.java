@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import com.teamrocket.rsocketapi.dto.PokemonDTO;
 import com.teamrocket.rsocketapi.mappers.PokemonMapper;
 import com.teamrocket.rsocketapi.model.Pokemon;
-import com.teamrocket.rsocketapi.repository.PokeDatabase;
+import com.teamrocket.rsocketapi.repository.PokeRepo;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -15,7 +15,7 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class PokeService {
 
-  @Autowired private final PokeDatabase repo;
+  @Autowired private final PokeRepo repo;
   private final PokemonMapper mapper;
 
   public Flux<PokemonDTO> getAll() {
