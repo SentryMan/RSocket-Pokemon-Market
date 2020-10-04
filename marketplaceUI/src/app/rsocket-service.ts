@@ -37,7 +37,7 @@ export class RSocketService {
         payload: { data: "SECRET" }
       },
       transport: new RSocketWebSocketClient({
-        url: 'ws://localhost:6565/rsocket'
+        url: 'ws://team-rocket-market.herokuapp.com/rsocket'
       })
     })
 
