@@ -30,7 +30,7 @@ export class RSocketService {
         metadata: IdentitySerializer
       },
       setup: {
-        keepAlive: 60000,
+        keepAlive: 29000,
         lifetime: 180000,
         dataMimeType: 'application/json',
         metadataMimeType: 'message/x.rsocket.routing.v0',

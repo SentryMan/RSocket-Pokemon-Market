@@ -3,6 +3,7 @@ import { RSocketService } from '../rsocket-service';
 
 import { Pokemon } from '../Pokemon';
 import { CartService } from '../cart.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-poke-list',
@@ -33,7 +34,7 @@ export class PokeListComponent implements OnInit {
 }
 
   getPokemon(): void {
-
+console.log("InFunc");
     this.service.getPokemon()
     .subscribe(poke => {
       this.pokemon.push(poke);
@@ -93,10 +94,13 @@ export class PokeListComponent implements OnInit {
 
   ngOnInit() {
 
-    if(this.service.rsocket !== undefined)
+    if(this.service.rsocket !== undefined){
       this.getPokemon();
+    }
 
-    else this.service.socketReady.subscribe(b=>this.getPokemon());
+    else {
+      this.service.socketReady.pipe(take(1)).subscribe(b=>this.getPokemon());
+    }
 
   }
 

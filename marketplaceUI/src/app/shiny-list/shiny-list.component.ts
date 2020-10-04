@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Pokemon } from '../Pokemon';
 import { PokeListComponent } from '../poke-list/poke-list.component';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-shiny-list',
@@ -9,7 +10,7 @@ import { PokeListComponent } from '../poke-list/poke-list.component';
 })
 export class ShinyListComponent extends PokeListComponent implements OnInit {
 
-  pokemon: Pokemon[];
+  pokemon: Pokemon[] = [];
 
   getShinyPokemon(): void {
 
@@ -21,9 +22,12 @@ export class ShinyListComponent extends PokeListComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(this.service.rsocket !== undefined)
+    if(this.service.rsocket !== undefined){
       this.getShinyPokemon();
-    else this.service.socketReady.subscribe(b=>{console.log("sub");this.getShinyPokemon()});
+    }
+    else {
+      this.service.socketReady.pipe(take(1)).subscribe(b=>this.getShinyPokemon());
+    }
   }
 
   setPrice() {

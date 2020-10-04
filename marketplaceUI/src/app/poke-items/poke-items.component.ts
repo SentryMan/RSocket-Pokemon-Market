@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Items } from '../Items';
 import { CartService } from '../cart.service';
 import { RSocketService } from '../rsocket-service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-poke-items',
@@ -49,10 +50,13 @@ export class PokeItemsComponent implements OnInit {
 
   ngOnInit() {
 
-    if (this.service.rsocket !== undefined)
+    if (this.service.rsocket !== undefined){
       this.getItem();
+    }
 
-    else this.service.socketReady.subscribe(b => this.getItem());
+    else {
+     this.service.socketReady.pipe(take(1)).subscribe(b => this.getItem());
+    }
   }
 
 
