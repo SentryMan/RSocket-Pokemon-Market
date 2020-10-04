@@ -21,7 +21,7 @@ export class CheckoutComponent implements OnInit {
 
   sendMail() {
     const mail = new Mail(this.email, this.cart, this.items, this.total);
-    this.emailservice.sendEmail(mail).then(poke => console.log(poke));
+    this.emailservice.sendEmail(mail);
 
   }
 

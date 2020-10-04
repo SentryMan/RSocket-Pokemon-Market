@@ -7,7 +7,7 @@ import { Mail } from './mail';
 import { RSocketClient, JsonSerializer, IdentitySerializer, Encodable } from 'rsocket-core';
 import RSocketWebSocketClient from 'rsocket-websocket-client';
 import { ReactiveSocket } from 'rsocket-types'
-import { Flowable, Single } from 'rsocket-flowable';
+import { Flowable} from 'rsocket-flowable';
 import { Items } from './Items';
 
 
@@ -73,12 +73,11 @@ export class RSocketService {
   }
 
   // Email RSocket
-  sendEmail(email: Mail): Single<String> {
-    return this.rsocket.requestResponse({
+  sendEmail(email: Mail): void {
+    return this.rsocket.fireAndForget({
       data: email,
       metadata: String.fromCharCode('api.email'.length) + 'api.email'
-    }).map(p =>
-      p.data);
+    });
 
   }
 

@@ -34,7 +34,7 @@ export class PokeListComponent implements OnInit {
 }
 
   getPokemon(): void {
-console.log("InFunc");
+
     this.service.getPokemon()
     .subscribe(poke => {
       this.pokemon.push(poke);
