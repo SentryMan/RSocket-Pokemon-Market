@@ -93,9 +93,11 @@ export class RSocketService {
 
     sock.connectionStatus().subscribe(status =>{
       console.log("RSocket Connection is: "+status.kind);
-      if (status.kind!=="CONNECTED")
+      if (status.kind!=="CONNECTED"){
         this.rsocket = undefined;
-
+        console.log("Attempting Reconnect");
+        this.connectSocket;
+      }
       else{
         this.rsocket = sock;
         this.socketReady.next("ready");
