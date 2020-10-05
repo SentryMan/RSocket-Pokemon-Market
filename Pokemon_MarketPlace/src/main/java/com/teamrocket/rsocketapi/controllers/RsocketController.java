@@ -1,5 +1,6 @@
 package com.teamrocket.rsocketapi.controllers;
 
+import javax.mail.AuthenticationFailedException;
 import javax.mail.MessagingException;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -29,11 +30,11 @@ public class RsocketController {
 
   @ConnectMapping
   public void onConnect(RSocketRequester rSocketRequester, @Payload String setupPayload)
-      throws IllegalAccessException {
+      throws AuthenticationFailedException {
 
     final RSocket requestSocket = rSocketRequester.rsocket();
     if (!setupPayload.contains("SECRET"))
-      throw new IllegalAccessException("Invalid Credentials");
+      throw new AuthenticationFailedException("Invalid Credentials");
     else
       requestSocket
           .onClose()
