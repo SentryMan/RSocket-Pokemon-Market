@@ -28,10 +28,12 @@ public class RsocketController {
   private final MailService mailService;
 
   @ConnectMapping
-  public void onConnect(RSocketRequester rSocketRequester, @Payload String setupPayload) {
+  public void onConnect(RSocketRequester rSocketRequester, @Payload String setupPayload)
+      throws IllegalAccessException {
 
     final RSocket requestSocket = rSocketRequester.rsocket();
-    if (!setupPayload.contains("\"SECRET\"")) requestSocket.dispose();
+    if (!setupPayload.contains("SECRET"))
+      throw new IllegalAccessException("Invalid Credentials");
     else
       requestSocket
           .onClose()
