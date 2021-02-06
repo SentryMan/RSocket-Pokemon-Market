@@ -27,7 +27,7 @@
     <tr *ngFor="let poke of pokemon" class="text-center">
 
       <td *ngIf="poke.nationalNum > beginning && poke.nationalNum < end || check(poke)">{{poke.nationalNum}}</td>
-      <td *ngIf="poke.nationalNum > beginning && poke.nationalNum < end || check(poke)"><img src = {{poke.sprite.animated}}></td>
+      <td *ngIf="poke.nationalNum > beginning && poke.nationalNum < end || check(poke)"><img src = {{poke.sprite.animated}} alt="{{poke.name}}"></td>
       <td *ngIf="poke.nationalNum > beginning && poke.nationalNum < end || check(poke)">{{poke.name}}</td>
 
       <td *ngIf="poke.type[1] && poke.nationalNum > beginning && poke.nationalNum < end || check(poke)  && poke.type[1]">
