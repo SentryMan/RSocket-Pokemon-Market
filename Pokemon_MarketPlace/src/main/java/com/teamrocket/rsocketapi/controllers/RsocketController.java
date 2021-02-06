@@ -1,8 +1,10 @@
 package com.teamrocket.rsocketapi.controllers;
 
 import javax.mail.MessagingException;
+import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.invocation.MethodArgumentResolutionException;
 import org.springframework.messaging.rsocket.RSocketRequester;
 import org.springframework.messaging.rsocket.annotation.ConnectMapping;
 import org.springframework.stereotype.Controller;
@@ -28,6 +30,12 @@ public class RsocketController {
   private final ItemService itemService;
   private final ShinyService shinyService;
   private final MailService mailService;
+
+  @MessageExceptionHandler(MethodArgumentResolutionException.class)
+  public Mono<RejectedSetupException> inavlidPayload() {
+
+    return Mono.error(new RejectedSetupException("Invalid Setup Payload"));
+  }
 
   @ConnectMapping
   public Mono<Void> onConnect(
