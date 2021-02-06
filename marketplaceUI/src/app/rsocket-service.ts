@@ -9,6 +9,7 @@ import RSocketWebSocketClient from 'rsocket-websocket-client';
 import { ReactiveSocket } from 'rsocket-types'
 import { Flowable} from 'rsocket-flowable';
 import { Items } from './Items';
+import { SetupPayload } from './setupPayload';
 
 
 @Injectable({
@@ -34,10 +35,10 @@ export class RSocketService {
         lifetime: 180000,
         dataMimeType: 'application/json',
         metadataMimeType: 'message/x.rsocket.routing.v0',
-        payload: { data: "SECRET" }
+        payload:{data: new SetupPayload("team-rocket", "SECRET" )}
       },
       transport: new RSocketWebSocketClient({
-        url: 'wss://team-rocket-market.herokuapp.com/rsocket'
+        url: 'ws://localhost:6565/rsocket'
       })
     })
 

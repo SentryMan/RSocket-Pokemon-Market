@@ -1,6 +1,5 @@
 package com.teamrocket.rsocketapi.controllers;
 
-import javax.mail.AuthenticationFailedException;
 import javax.mail.MessagingException;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -11,13 +10,15 @@ import com.teamrocket.rsocketapi.dto.ItemDTO;
 import com.teamrocket.rsocketapi.dto.PokemonDTO;
 import com.teamrocket.rsocketapi.dto.ShinyDTO;
 import com.teamrocket.rsocketapi.model.MailModel;
+import com.teamrocket.rsocketapi.model.SetupPayload;
 import com.teamrocket.rsocketapi.services.ItemService;
 import com.teamrocket.rsocketapi.services.MailService;
 import com.teamrocket.rsocketapi.services.PokeService;
 import com.teamrocket.rsocketapi.services.ShinyService;
-import io.rsocket.RSocket;
+import io.rsocket.exceptions.RejectedSetupException;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Controller
 @RequiredArgsConstructor
@@ -29,20 +30,32 @@ public class RsocketController {
   private final MailService mailService;
 
   @ConnectMapping
-  public void onConnect(RSocketRequester rSocketRequester, @Payload String setupPayload)
-      throws AuthenticationFailedException {
+  public Mono<Void> onConnect(
+      RSocketRequester rSocketRequester, @Payload SetupPayload setupPayload) {
 
-    final RSocket requestSocket = rSocketRequester.rsocket();
-    if (!setupPayload.contains("SECRET"))
-      throw new AuthenticationFailedException("Invalid Credentials");
+    if (!setupPayload.getPassword().contains("SECRET"))
+      return Mono.error(
+          new RejectedSetupException(
+              "Connection to " + setupPayload.getClientName() + " is not authenticated"));
     else
-      requestSocket
+      rSocketRequester
+          .rsocket()
           .onClose()
-          .doFirst(() -> System.out.println("Client Connected "))
+          .doFirst(
+              () -> System.out.println("Client: " + setupPayload.getClientName() + " CONNECTED."))
+          .doOnError(
+              error ->
+                  // Warn when channels are closed by clients
+                  System.out.println(
+                      "Channel to client " + setupPayload.getClientName() + " CLOSED"))
+          .doFinally(
+              f -> System.out.println("Client " + setupPayload.getClientName() + " DISCONNECTED"))
           .subscribe(
               null,
               error -> System.err.println("Client Closed With Error"),
               () -> System.out.println("Connection Closed"));
+
+    return Mono.empty();
   }
 
   @MessageMapping("api.pokemon")
